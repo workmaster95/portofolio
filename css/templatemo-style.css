@@ -115,7 +115,7 @@ hr {
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh; /* allow content to grow on small screens */
 }
 
 .templatemo-home .col-md-8.col-sm-10 {
@@ -180,17 +180,18 @@ hr {
 }
 
 .work-wrapper {
-    border: 1px solid #666;
-    border-radius: 2px;
-    text-align: center;
-    padding: 40px; 
-    -webkit-transition: all 0.6s ease-in;
-            transition: all 0.6s ease-in;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    height: 500px; 
-    overflow: hidden; 
+  border: 1px solid #666;
+  border-radius: 2px;
+  text-align: center;
+  padding: 30px 20px;
+  -webkit-transition: all 0.6s ease-in;
+      transition: all 0.6s ease-in;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px; /* allow cards to shrink on smaller screens */
+  height: auto;
+  box-sizing: border-box;
 }
 
 .work-wrapper:hover { border-color: #eb5424; }
@@ -239,7 +240,9 @@ hr {
     overflow: hidden;
     margin: 0;
     position: relative;
-    height: 200px;
+  height: auto;
+  aspect-ratio: 16 / 9; /* modern browsers will preserve an even thumbnail ratio */
+  max-height: 360px; /* avoid extremely tall thumbnails on large screens */
 }
 
 .portfolio-thumb .fluid-img {
@@ -247,6 +250,14 @@ hr {
     height: 100%;
     object-fit: cover;
     display: block;
+    max-width: 100%;
+}
+
+/* Make all media scale inside their containers */
+img, picture, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .portfolio-overlay {
@@ -356,6 +367,8 @@ hr {
     height: 100%;
     overflow: hidden;
 }
+/* Desktop default: 4 columns */
+.iso-box { width: 25%; }
 /* END PORTFOLIO */
 
 /* START CERTIFICATIONS */
@@ -371,8 +384,9 @@ padding: 2px;
 }
 
 #certifications .portfolio-thumb .fluid-img {
-    width: 380px; 
-    height: 200px; 
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
     display: block;
     transition: transform 0.3s ease-in-out; 
     padding: 2px;
@@ -433,6 +447,11 @@ padding: 2px;
     margin-right: 6px;
     margin-bottom: 10px;
 }
+
+#certifications .iso-box {
+  padding: 10px;
+}
+
 /* END CERTIFICATIONS */
 
 /* START RESUME */
@@ -625,6 +644,39 @@ input {
 
 }
 
+/* Additional responsive breakpoints */
+@media (max-width: 1200px) {
+  .title { font-size: 48px; }
+  .tm-home-title { font-size: 48px; }
+  .tm-home-subtitle { font-size: 20px; }
+  .work-wrapper { min-height: 300px; padding: 24px; }
+}
+
+@media (max-width: 992px) {
+  /* 2 columns layout already exists for .iso-box at 992 break; ensure spacing */
+  .iso-box { width: 50%; }
+  .portfolio-thumb { aspect-ratio: 4 / 3; }
+  .tm-home-title { font-size: 40px; }
+}
+
+@media (max-width: 768px) {
+  .navbar-default .navbar-brand { font-size: 24px; padding-left: 8px; }
+  .navbar-default .navbar-nav li a { line-height: 38px; }
+  .work-wrapper { min-height: auto; padding: 20px; }
+  .tm-home-title { font-size: 32px; }
+  .tm-home-subtitle { font-size: 16px; }
+  .portfolio-thumb { aspect-ratio: 16 / 9; height: auto; }
+}
+
+@media (max-width: 576px) {
+  .navbar-default .navbar-brand { font-size: 20px; }
+  .navbar-default .navbar-toggle { padding-top: 6px; }
+  .tm-view-more-btn { padding: 10px 24px; font-size: 15px; }
+  .iso-box { width: 100%; }
+  .portfolio-thumb { aspect-ratio: 4 / 3; }
+  .portfolio-overlay { padding: 12px; }
+}
+
 /* END MEDIA 980 */
 
 @media screen and (max-width: 767px) {
@@ -658,3 +710,12 @@ input {
 }
 
 /* END MEDIA 360 */
+
+
+@media (max-width: 992px) {
+  .iso-box { width: 50%; } /* شاشتين في الصف */
+}
+
+@media (max-width: 600px) {
+  .iso-box { width: 100%; } /* عنصر واحد في الصف */
+}
